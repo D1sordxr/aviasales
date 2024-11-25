@@ -19,8 +19,19 @@ func NewOrderHandler(useCase UseCase) *Handler {
 }
 
 func (h *Handler) CreateOrder(c *gin.Context) {
-	c.JSON(418, response.CommonResponse{
-		Message: "no message",
-		Data:    nil,
+	var order dto.Order
+	err := c.BindJSON(&order)
+	if err != nil {
+		c.JSON(400, response.CommonResponse{Message: "error", Data: err.Error()})
+	}
+
+	order, err = h.UseCase.CreateOrderDTO(order)
+	if err != nil {
+		c.JSON(400, response.CommonResponse{Message: "error", Data: err.Error()})
+	}
+
+	c.JSON(200, response.CommonResponse{
+		Message: "Successfully created!",
+		Data:    order,
 	})
 }
