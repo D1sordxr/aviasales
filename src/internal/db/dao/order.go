@@ -3,6 +3,7 @@ package dao
 import (
 	"context"
 	"errors"
+	"github.com/D1sordxr/aviasales/src/internal/application/order/dto"
 	"github.com/D1sordxr/aviasales/src/internal/db/models"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
@@ -79,6 +80,10 @@ func (dao *OrderDAO) CreateOrder(order models.Order) (int, error) {
 	}
 
 	return orderID, nil
+}
+
+func (dao *OrderDAO) CreateOrderDTO(order dto.Order) (dto.Order, error) {
+	return dto.Order{OrderStatus: order.OrderStatus}, nil
 }
 
 func (dao *OrderDAO) ticketsAvailabilityCheck(t []models.Ticket) (bool, error) {

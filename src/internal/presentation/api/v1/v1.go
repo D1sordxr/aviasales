@@ -2,8 +2,10 @@ package v1
 
 import (
 	useCase "github.com/D1sordxr/aviasales/src/internal/application"
+	orderHandler "github.com/D1sordxr/aviasales/src/internal/presentation/api/v1/controllers/handlers/order"
 	okHandler "github.com/D1sordxr/aviasales/src/internal/presentation/api/v1/controllers/handlers/statusOK"
 	ticketHandler "github.com/D1sordxr/aviasales/src/internal/presentation/api/v1/controllers/handlers/ticket"
+	orderRoutes "github.com/D1sordxr/aviasales/src/internal/presentation/api/v1/controllers/routes/order"
 	okRoutes "github.com/D1sordxr/aviasales/src/internal/presentation/api/v1/controllers/routes/statusOK"
 	ticketRoutes "github.com/D1sordxr/aviasales/src/internal/presentation/api/v1/controllers/routes/ticket"
 	"github.com/gin-gonic/gin"
@@ -33,4 +35,8 @@ func (r *RoutesV1) setupRoutesV1() {
 	// Tickets path
 	ticketHandlers := ticketHandler.NewTicketHandler(r.UseCase)
 	ticketRoutes.NewTicketRoutes(v1, ticketHandlers)
+
+	// Orders path
+	orderHandlers := orderHandler.NewOrderHandler(r.UseCase)
+	orderRoutes.NewOrderRoutes(v1, orderHandlers)
 }
